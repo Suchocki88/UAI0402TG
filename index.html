@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lesson 4.1 Standards Alignment - Understanding AI</title>
+    <title>Lesson 4.2: Training Data Shapes AI Thinking - Teacher's Guide</title>
     <style>
         * {
             margin: 0;
@@ -13,152 +13,219 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background-color: #f5f5f5;
             color: #333;
+            background: #f5f5f5;
         }
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
-            min-height: 100vh;
+            height: 1600px;
+            overflow-y: auto;
         }
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 40px 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .header h1 {
-            margin: 0 0 10px 0;
-            font-size: 2.2em;
-        }
-        .header .subtitle {
-            font-size: 1.1em;
-            opacity: 0.95;
-            margin-bottom: 5px;
-        }
-        .header .lesson-info {
-            font-size: 0.95em;
-            opacity: 0.9;
-            font-style: italic;
-        }
-        .content {
-            padding: 30px;
-        }
-        .intro {
-            background: #e8f4f8;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #2196F3;
-            margin-bottom: 30px;
-        }
-        .standards-selector {
-            margin-bottom: 30px;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
+            padding: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .standards-selector label {
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        .lesson-info {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .nav-buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.4rem;
+            margin-top: 1rem;
+        }
+        .nav-buttons a {
             display: block;
-            font-weight: 600;
-            margin-bottom: 10px;
+            padding: 0.4rem 0.6rem;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            transition: background 0.2s;
+            border: 1px solid rgba(255,255,255,0.3);
+            text-align: center;
+        }
+        .nav-buttons a:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        .content {
+            padding: 2rem;
+        }
+        .section {
+            margin-bottom: 3rem;
+        }
+        .section h2 {
             color: #667eea;
-            font-size: 1.1em;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
         }
-        .standards-selector select {
-            width: 100%;
-            padding: 12px;
-            font-size: 1em;
-            border: 2px solid #667eea;
-            border-radius: 5px;
-            background: white;
-            cursor: pointer;
-            transition: border-color 0.3s;
-        }
-        .standards-selector select:hover {
-            border-color: #764ba2;
-        }
-        .standards-selector select:focus {
-            outline: none;
-            border-color: #764ba2;
-            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
-        }
-        .standards-content {
-            display: none;
-            animation: fadeIn 0.3s;
-        }
-        .standards-content.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .standard-section {
-            background: white;
-            padding: 25px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border-left: 4px solid #667eea;
-        }
-        .standard-section h2 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.5em;
-        }
-        .standard-section h3 {
+        .section h3 {
             color: #764ba2;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            font-size: 1.2em;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
         }
-        .standard-item {
-            background: #f9f9f9;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border-left: 3px solid #9c27b0;
-        }
-        .standard-code {
-            font-weight: 600;
-            color: #764ba2;
-            font-family: 'Courier New', monospace;
-        }
-        .standard-description {
-            margin-top: 8px;
+        .section h4 {
             color: #555;
+            font-size: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
         }
-        .alignment-note {
+        .highlight-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        .warning-box {
             background: #fff3e0;
-            padding: 15px;
-            border-radius: 5px;
             border-left: 4px solid #ff9800;
-            margin-top: 15px;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        .tip-box {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        .script-box {
+            background: #fafafa;
+            border: 2px solid #ddd;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
             font-style: italic;
         }
-        .lesson-mapping {
-            background: #e8f5e9;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 10px;
+        .script-label {
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            font-style: normal;
+            font-weight: bold;
         }
-        .lesson-mapping strong {
-            color: #2e7d32;
+        .teacher-note {
+            background: #fff9c4;
+            border-left: 4px solid #fbc02d;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
         }
-        ul {
-            margin: 10px 0;
-            padding-left: 25px;
+        .objectives-list {
+            margin: 1rem 0;
         }
-        li {
-            margin: 8px 0;
+        .objectives-list ul, .objectives-list ol {
+            margin-left: 2rem;
+            margin-top: 0.5rem;
+        }
+        .objectives-list li {
+            margin: 0.5rem 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        table th {
+            background: #667eea;
+            color: white;
+            padding: 0.8rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid #ddd;
+        }
+        table tr:hover {
+            background: #f5f5f5;
+        }
+        .timeline {
+            margin: 1.5rem 0;
+        }
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        .timeline-time {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 0.9rem;
+        }
+        .timeline-content ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        .timeline-content li {
+            margin: 0.3rem 0;
+        }
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .material-card {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        .material-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        .material-card ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
         }
         .print-button {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: #667eea;
+            background: #4caf50;
             color: white;
             border: none;
             padding: 12px 24px;
@@ -169,14 +236,45 @@
             z-index: 1000;
         }
         .print-button:hover {
-            background: #764ba2;
+            background: #45a049;
+        }
+        .scenario-card {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.75rem 0;
+        }
+        .scenario-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        .answer-key {
+            background: #e8f5e9;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .example-box {
+            background: #fce4ec;
+            border-left: 4px solid #e91e63;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
         }
         @media print {
-            .print-button, .standards-selector {
+            .print-button {
                 display: none;
             }
-            .standards-content {
-                display: block !important;
+            .header {
+                position: relative;
+            }
+            .nav-buttons {
+                display: none;
+            }
+            body {
+                background: white;
             }
         }
     </style>
@@ -184,748 +282,501 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>State Standards Alignment</h1>
-            <div class="subtitle">Understanding AI: A Conceptual Approach</div>
-            <div class="lesson-info">Chapter 4, Lesson 4.1: What Is Bias?</div>
+            <h1>🔄 Lesson 4.2: Training Data Shapes AI Thinking</h1>
+            <div class="subtitle">Teacher's Guide | Lesson Day</div>
+            <div class="lesson-info">Chapter 4: AI Bias</div>
+            <div class="nav-buttons">
+                <a href="#overview">📋 Overview</a>
+                <a href="#objectives">🎯 Objectives</a>
+                <a href="#materials">📦 Materials</a>
+                <a href="#preparation">🔧 Preparation</a>
+                <a href="#lesson-flow">⏱️ Lesson Flow</a>
+                <a href="#facilitation">👨‍🏫 Facilitation</a>
+                <a href="#assessment">📊 Assessment</a>
+                <a href="#differentiation">♿ Support</a>
+                <a href="#challenges">🚧 Challenges</a>
+                <a href="#reflection">💭 Reflection</a>
+            </div>
         </div>
-        
-        <button class="print-button" onclick="window.print()">🖨️ Print Standards</button>
-        
+
+        <button class="print-button" onclick="window.print()">🖨️ Print Guide</button>
+
         <div class="content">
-            <div class="intro">
-                <p><strong>Lesson 4.1</strong> is a foundational Lesson Day where students explore human cognitive bias before examining AI bias. Students learn four types of bias (confirmation, availability, implicit, in-group), analyze everyday scenarios, and reflect on their own biases. This lesson emphasizes metacognition, critical thinking, collaborative discussion, and self-reflection—competencies addressed across multiple state and national standards frameworks.</p>
-            </div>
-            
-            <div class="standards-selector">
-                <label for="standards-select">Select Standards Framework:</label>
-                <select id="standards-select" onchange="showStandards(this.value)">
-                    <option value="">-- Choose State Standards --</option>
-                    <option value="texas">Texas (TEKS)</option>
-                    <option value="california">California</option>
-                    <option value="florida">Florida</option>
-                    <option value="newyork">New York</option>
-                    <option value="pennsylvania">Pennsylvania</option>
-                    <option value="illinois">Illinois</option>
-                    <option value="ohio">Ohio</option>
-                    <option value="georgia">Georgia</option>
-                    <option value="northcarolina">North Carolina</option>
-                    <option value="michigan">Michigan</option>
-                    <option value="virginia">Virginia</option>
-                    <option value="washington">Washington</option>
-                    <option value="mississippi">Mississippi</option>
-                    <option value="ccss">Common Core State Standards (CCSS) - ELA</option>
-                    <option value="iste">ISTE Standards for Students</option>
-                    <option value="csta">CSTA K-12 Computer Science Standards</option>
-                    <option value="c3">C3 Framework for Social Studies</option>
-                </select>
-            </div>
 
-            <!-- Texas TEKS -->
-            <div id="texas" class="standards-content">
-                <div class="standard-section">
-                    <h2>Texas Essential Knowledge and Skills (TEKS)</h2>
-                    
-                    <div class="alignment-note">
-                        Lesson 4.1 addresses social studies inquiry, critical thinking, and communication standards through exploration of cognitive bias and self-reflection activities.
+            <!-- OVERVIEW SECTION -->
+            <section id="overview" class="section">
+                <h2>📋 Lesson Overview</h2>
+                <div class="highlight-box">
+                    <h4>🎯 The Big Idea</h4>
+                    <p>Students discover that AI learns prejudices and assumptions directly from training data created by humans. This lesson bridges human bias (Lesson 4.1) to AI bias, showing how biases get "baked into" systems through the examples AI learns from. The key insight: AI doesn't create new biases—it amplifies and perpetuates human biases present in training data.</p>
+                </div>
+
+                <h3>Why This Lesson Matters</h3>
+                <p>This is the crucial bridge between understanding human cognition (4.1) and investigating AI systems (4.3+). Students must grasp that AI bias isn't a mysterious technical failure—it's a direct consequence of training on human-created data. The phrase "garbage in, garbage out" applies not just to factual accuracy but to cultural assumptions, stereotypes, and prejudices.</p>
+
+                <div class="success-box">
+                    <h4>✅ Success Indicators</h4>
+                    <ul>
+                        <li>Students can explain how training data transfers human biases to AI systems</li>
+                        <li>Students can identify specific examples of AI bias (image recognition, translation, autocomplete)</li>
+                        <li>Students connect Chapter 2's training data concepts to bias implications</li>
+                        <li>Students understand that AI amplifies existing biases rather than creating new ones</li>
+                        <li>Students apply "garbage in, garbage out" to cultural assumptions, not just factual errors</li>
+                    </ul>
+                </div>
+
+                <h3>Lesson Connections</h3>
+                <div class="objectives-list">
+                    <ul>
+                        <li><strong>Chapter 2:</strong> Training data determines AI capabilities—now students see it also determines AI values and biases</li>
+                        <li><strong>Lesson 4.1:</strong> Human cognitive biases exist in all of us—including people who create training data</li>
+                        <li><strong>Lesson 4.3:</strong> Tomorrow students will hunt for bias in Alia's responses firsthand</li>
+                        <li><strong>Lesson 3.7:</strong> RLHF workers shape AI values—their biases become AI's biases</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- OBJECTIVES SECTION -->
+            <section id="objectives" class="section">
+                <h2>🎯 Learning Objectives</h2>
+
+                <h3>Content Knowledge</h3>
+                <div class="objectives-list">
+                    <ul>
+                        <li>Students will explain how human biases in training data transfer to AI systems</li>
+                        <li>Students will identify three real-world examples of AI bias (image recognition, translation, autocomplete)</li>
+                        <li>Students will articulate why AI amplifies rather than creates biases</li>
+                        <li>Students will apply "garbage in, garbage out" to cultural assumptions</li>
+                    </ul>
+                </div>
+
+                <h3>Skills & Practices</h3>
+                <div class="objectives-list">
+                    <ul>
+                        <li>Students will analyze how specific training data characteristics lead to specific biases</li>
+                        <li>Students will connect abstract concepts (bias in data) to concrete outcomes (biased AI behavior)</li>
+                        <li>Students will evaluate claims about AI "objectivity" using evidence</li>
+                    </ul>
+                </div>
+
+                <h3>Dispositions & Mindsets</h3>
+                <div class="objectives-list">
+                    <ul>
+                        <li>Students will approach AI bias as a solvable problem, not a reason for cynicism</li>
+                        <li>Students will recognize that understanding bias sources enables better AI use</li>
+                        <li>Students will maintain curiosity about AI systems rather than blind trust or rejection</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- MATERIALS SECTION -->
+            <section id="materials" class="section">
+                <h2>📦 Materials</h2>
+                <div class="materials-grid">
+                    <div class="material-card">
+                        <h4>Teacher Materials</h4>
+                        <ul>
+                            <li>Projector/display for case study examples</li>
+                            <li>Whiteboard for "garbage in, garbage out" diagram</li>
+                            <li>Case study images/screenshots (optional)</li>
+                            <li>This teacher's guide</li>
+                        </ul>
                     </div>
-                    
-                    <h3>Social Studies - Government/Citizenship</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">§113.44(c)(21)(A)</div>
-                        <div class="standard-description">Analyze how individuals, groups, and institutions are affected by perceptions, beliefs, and biases.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students directly explore how cognitive biases (confirmation, availability, implicit, in-group) affect perception and decision-making through scenario analysis and self-reflection.</div>
+                    <div class="material-card">
+                        <h4>Student Materials</h4>
+                        <ul>
+                            <li>Field journal</li>
+                            <li>Lesson 4.2 student guide</li>
+                            <li>Pen/pencil</li>
+                        </ul>
                     </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">§113.44(c)(22)(B)</div>
-                        <div class="standard-description">Apply critical-thinking skills to evaluate information and analyze sources.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students analyze bias scenarios to identify which bias type is operating and evaluate whether the bias is helpful, harmful, or neutral in context.</div>
-                    </div>
-                    
-                    <h3>English Language Arts - Speaking and Listening</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">§110.38(b)(1)(A)</div>
-                        <div class="standard-description">Engage in meaningful and respectful discourse by listening actively, asking relevant questions, and responding with appropriate detail.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students engage in pair-share discussions about the coffee shop scenario, group analysis of bias scenarios, and whole-class discussions about why bias exists.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">§110.38(b)(1)(D)</div>
-                        <div class="standard-description">Participate collaboratively in discussions, plan agendas with clear goals, and set time limits for speakers.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Small group scenario analysis requires collaborative discussion with focused goals (identify bias type, explain why brain took shortcut, evaluate harm/benefit).</div>
-                    </div>
-                    
-                    <h3>Psychology (Elective)</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">§113.45(c)(8)(A)</div>
-                        <div class="standard-description">Describe the role of cognition in learning including attention, memory, and metacognition.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students explore metacognition directly—becoming aware of their own cognitive shortcuts and biases through field journal reflection.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">§113.45(c)(12)(B)</div>
-                        <div class="standard-description">Explain how attitudes, stereotypes, and prejudice affect perception and behavior.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students learn how implicit bias and stereotypes operate unconsciously to affect perception, using concrete, relatable scenarios.</div>
+                    <div class="material-card">
+                        <h4>Recommended Case Studies</h4>
+                        <ul>
+                            <li>Image recognition: Skin tone performance disparities</li>
+                            <li>Translation: Gendered pronoun defaults</li>
+                            <li>Autocomplete: Professional stereotypes</li>
+                            <li>Resume screening: Name-based bias</li>
+                        </ul>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- California Standards -->
-            <div id="california" class="standards-content">
-                <div class="standard-section">
-                    <h2>California Common Core State Standards</h2>
-                    
-                    <div class="alignment-note">
-                        Lesson 4.1 addresses speaking/listening, writing, and History-Social Science standards through collaborative discussion and reflective writing about cognitive bias.
+            <!-- PREPARATION SECTION -->
+            <section id="preparation" class="section">
+                <h2>🔧 Preparation</h2>
+
+                <h3>Before Class</h3>
+                <div class="objectives-list">
+                    <ul>
+                        <li>Review the three main case studies and prepare to explain each clearly</li>
+                        <li>Prepare visual diagram showing training data → AI learning → biased output</li>
+                        <li>Consider which examples will resonate most with your specific students</li>
+                        <li>Review Chapter 2 knock-knock joke example to reference as bridge</li>
+                        <li>Anticipate defensive or cynical reactions and prepare responses</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Critical Preparation</h4>
+                    <p>This lesson can trigger two problematic reactions:</p>
+                    <ul>
+                        <li><strong>Defensiveness:</strong> "I'm not biased, so my data wouldn't be biased!"</li>
+                        <li><strong>Cynicism:</strong> "So AI is just useless and unfair?"</li>
+                    </ul>
+                    <p>Prepare to redirect both: Understanding bias sources helps us work WITH AI more effectively, not abandon it. Awareness is power, not paralysis.</p>
+                </div>
+
+                <h3>Room Setup</h3>
+                <p>Standard classroom arrangement works well. Ensure all students can see projected case study examples clearly. Consider groupings for the "training data detective" activity.</p>
+            </section>
+
+            <!-- LESSON FLOW SECTION -->
+            <section id="lesson-flow" class="section">
+                <h2>⏱️ Lesson Flow (50 minutes)</h2>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-time">0:00 - 0:05<br>(5 min)</div>
+                        <div class="timeline-content">
+                            <h4>Opening: Bridge from Yesterday</h4>
+                            <ul>
+                                <li>Quick recall: "Yesterday we learned that everyone has cognitive biases. Why do they exist?"</li>
+                                <li>Bridge question: "Now imagine thousands of people—all with their own biases—creating the examples AI learns from. What might happen?"</li>
+                                <li>Frame today's focus: "Today we discover how human biases become AI biases"</li>
+                            </ul>
+                            <div class="tip-box">
+                                <strong>Tip:</strong> Reference the Chapter 2 knock-knock joke training. "Remember how the quality of training jokes affected the AI's jokes? The same principle applies to biases."
+                            </div>
+                        </div>
                     </div>
-                    
-                    <h3>Speaking and Listening Standards - Grades 9-10</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">CCSS.ELA-LITERACY.SL.9-10.1</div>
-                        <div class="standard-description">Initiate and participate effectively in collaborative discussions, building on others' ideas and expressing their own clearly.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students participate in pair-share about the coffee shop scenario, small group scenario analysis, and whole-class discussions about bias types and their purposes.</div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">0:05 - 0:20<br>(15 min)</div>
+                        <div class="timeline-content">
+                            <h4>Part I: Case Studies of AI Bias</h4>
+                            <ul>
+                                <li><strong>Case 1: Image Recognition</strong> (5 min)
+                                    <ul>
+                                        <li>Present: AI systems performing worse on darker skin tones</li>
+                                        <li>Ask: "What training data problem could cause this?"</li>
+                                        <li>Reveal: Training datasets overrepresented lighter-skinned faces</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Case 2: Translation</strong> (5 min)
+                                    <ul>
+                                        <li>Present: "The doctor... he" vs. "The nurse... she" defaults</li>
+                                        <li>Ask: "Where did the AI learn these associations?"</li>
+                                        <li>Reveal: Training text contained gendered professional patterns</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Case 3: Autocomplete</strong> (5 min)
+                                    <ul>
+                                        <li>Present: Search suggestions that reflect stereotypes</li>
+                                        <li>Ask: "Who created the searches the AI learned from?"</li>
+                                        <li>Reveal: AI learned patterns from millions of biased human searches</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="teacher-note">
+                                <strong>Note:</strong> For each case, follow the pattern: Present the bias → Ask students to hypothesize the training data cause → Confirm the connection. Students should discover the pattern, not just hear it.
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">CCSS.ELA-LITERACY.SL.9-10.1.D</div>
-                        <div class="standard-description">Respond thoughtfully to diverse perspectives, summarize points of agreement and disagreement.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Ground rules for Chapter 4 emphasize valuing diverse perspectives; students discuss whether biases are harmful, helpful, or neutral—acknowledging multiple valid viewpoints.</div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">0:20 - 0:30<br>(10 min)</div>
+                        <div class="timeline-content">
+                            <h4>Part II: The Core Insight</h4>
+                            <ul>
+                                <li>Draw diagram on board: Human Bias → Training Data → AI Learning → Biased Output</li>
+                                <li>Introduce key phrase: "Garbage in, garbage out"</li>
+                                <li>Expand the concept: This applies to cultural assumptions, not just factual errors</li>
+                                <li>Key insight discussion: "AI doesn't CREATE new biases—it AMPLIFIES existing ones"</li>
+                                <li>Why amplification matters: AI operates at massive scale, affecting millions of decisions</li>
+                            </ul>
+                            <div class="highlight-box">
+                                <strong>Key Point:</strong> Make explicit that AI can make bias WORSE by operating at scale and appearing "objective." When a human is biased, it affects their decisions. When AI is biased, it affects millions of decisions—and people often don't question it because "the computer said so."
+                            </div>
+                        </div>
                     </div>
-                    
-                    <h3>Writing Standards</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">CCSS.ELA-LITERACY.W.9-10.10</div>
-                        <div class="standard-description">Write routinely over extended time frames and shorter time frames for a range of tasks, purposes, and audiences.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students complete four field journal prompts requiring reflective writing about their own biases and predictions about AI bias.</div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">0:30 - 0:38<br>(8 min)</div>
+                        <div class="timeline-content">
+                            <h4>Part III: Training Data Detective</h4>
+                            <ul>
+                                <li>Present new scenarios; students predict training data problems:
+                                    <ul>
+                                        <li>"An AI writing tool suggests mostly male names for CEO characters"</li>
+                                        <li>"A voice assistant struggles to understand accented English"</li>
+                                        <li>"A loan approval AI rejects applications from certain zip codes"</li>
+                                    </ul>
+                                </li>
+                                <li>Students work in pairs to hypothesize: What was probably in (or missing from) the training data?</li>
+                                <li>Quick share-out: 2-3 pairs explain their reasoning</li>
+                            </ul>
+                        </div>
                     </div>
-                    
-                    <h3>History-Social Science - Principles of American Democracy</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">HSS.12.2.5</div>
-                        <div class="standard-description">Students evaluate how effectively citizens can use media, political parties, interest groups, and public opinion to shape public policy.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Understanding cognitive bias is foundational to evaluating how media and public opinion are shaped—and how citizens can be influenced without awareness.</div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">0:38 - 0:45<br>(7 min)</div>
+                        <div class="timeline-content">
+                            <h4>Field Journal Reflection</h4>
+                            <ul>
+                                <li>Students complete reflection prompts individually</li>
+                                <li>Prompts focus on: connecting to Chapter 2, applying "garbage in, garbage out," and implications for AI use</li>
+                                <li>Circulate to ensure engagement</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">0:45 - 0:50<br>(5 min)</div>
+                        <div class="timeline-content">
+                            <h4>Closing: So What Do We Do?</h4>
+                            <ul>
+                                <li>Address potential cynicism: "Understanding this makes us BETTER at using AI, not worse"</li>
+                                <li>Preview: "Tomorrow we become bias detectives—hunting for hidden assumptions in Alia"</li>
+                                <li>Empowerment message: "Now you know WHERE bias comes from. That's the first step to recognizing it."</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- Florida Standards -->
-            <div id="florida" class="standards-content">
-                <div class="standard-section">
-                    <h2>Florida Standards</h2>
-                    
-                    <div class="alignment-note">
-                        Lesson 4.1 addresses Language Arts and Social Studies standards through analysis of cognitive bias, collaborative discussion, and reflective writing.
-                    </div>
-                    
-                    <h3>English Language Arts</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">LAFS.910.SL.1.1</div>
-                        <div class="standard-description">Initiate and participate effectively in collaborative discussions, building on others' ideas and expressing their own clearly and persuasively.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students engage in think-pair-share, small group scenario analysis, and whole-class discussion about bias types, building on peer observations.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">LAFS.910.W.3.10</div>
-                        <div class="standard-description">Write routinely over extended time frames and shorter time frames for a range of discipline-specific tasks, purposes, and audiences.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Field journal prompts require students to write reflectively about recognizing bias in themselves, when bias is helpful, and predictions about AI.</div>
-                    </div>
-                    
-                    <h3>Social Studies - Civics and Government</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">SS.912.C.2.3</div>
-                        <div class="standard-description">Experience the responsibilities of citizens at the local, state, or federal levels.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Understanding bias is essential to responsible citizenship; students develop awareness needed to recognize bias in civic discourse and media.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">SS.912.P.9.6</div>
-                        <div class="standard-description">Describe how group dynamics influence behavior (Psychology).</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> In-group bias directly addresses how group membership influences perception and behavior; students analyze cafeteria seating scenario.</div>
-                    </div>
-                </div>
-            </div>
+            <!-- FACILITATION SECTION -->
+            <section id="facilitation" class="section">
+                <h2>👨‍🏫 Facilitation Guide</h2>
 
-            <!-- New York Standards -->
-            <div id="newyork" class="standards-content">
-                <div class="standard-section">
-                    <h2>New York State Next Generation Learning Standards</h2>
-                    
-                    <div class="alignment-note">
-                        Lesson 4.1 addresses ELA and Social Studies standards through collaborative inquiry into cognitive bias and metacognitive reflection.
-                    </div>
-                    
-                    <h3>English Language Arts</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">9-10SL1</div>
-                        <div class="standard-description">Initiate and participate effectively in a range of collaborative discussions with diverse partners, building on others' ideas and expressing their own clearly and persuasively.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students collaborate in pairs, small groups, and whole-class discussions, building shared understanding of bias types and their functions.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">9-10W4</div>
-                        <div class="standard-description">Produce clear and coherent writing in which the development, organization, and style are appropriate to task, purpose, and audience.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Field journal entries require clear, coherent reflection appropriate to the purpose of self-examination and prediction.</div>
-                    </div>
-                    
-                    <h3>Social Studies Practices</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">A.5</div>
-                        <div class="standard-description">Detect possible limitations in the evidence, including sources/types of sources, and potential bias.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students learn to recognize cognitive biases that affect how evidence is perceived and interpreted—foundational to detecting bias in any source.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">A.7</div>
-                        <div class="standard-description">Identify perspectives and points of view in primary and secondary sources.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Understanding that all perspectives contain bias prepares students to identify viewpoints in sources and recognize whose perspective is represented.</div>
-                    </div>
+                <h3>Opening Bridge Script</h3>
+                <div class="script-box">
+                    <div class="script-label">SAY</div>
+                    "Yesterday we discovered something important: everyone has biases. They're cognitive shortcuts our brains use to process information quickly. Not character flaws—just how human brains work.<br><br>
+                    Now here's today's question: Who creates the examples that AI learns from? [Pause for responses] That's right—humans. Humans with biases. So what happens when AI learns from millions of examples created by humans who all have their own biases?<br><br>
+                    Today we're going to see exactly how human biases become AI biases."
                 </div>
-            </div>
 
-            <!-- Pennsylvania Standards -->
-            <div id="pennsylvania" class="standards-content">
-                <div class="standard-section">
-                    <h2>Pennsylvania Academic Standards</h2>
-                    
-                    <div class="alignment-note">
-                        Lesson 4.1 addresses Reading, Writing, Speaking and Listening, and Civics standards through exploration of cognitive bias and collaborative analysis.
-                    </div>
-                    
-                    <h3>Speaking and Listening</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">CC.1.5.9-10.A</div>
-                        <div class="standard-description">Initiate and participate effectively in a range of collaborative discussions on grade-level topics, texts, and issues, building on others' ideas and expressing their own clearly and persuasively.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students engage in structured discussions about bias scenarios, building on peer observations and expressing their own analysis of bias types.</div>
-                    </div>
-                    
-                    <h3>Writing</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">CC.1.4.9-10.X</div>
-                        <div class="standard-description">Write routinely over extended time frames and shorter time frames for a range of discipline-specific tasks, purposes, and audiences.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Field journal reflection requires focused writing about personal bias recognition and predictions about AI bias.</div>
-                    </div>
-                    
-                    <h3>Civics and Government</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">5.3.12.F</div>
-                        <div class="standard-description">Analyze how law and public policy affect the rights of individuals and groups.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Understanding bias is foundational to analyzing how bias in policy-making and law can affect rights—a concept developed throughout Chapter 4.</div>
-                    </div>
+                <h3>Case Study Facilitation</h3>
+                <div class="script-box">
+                    <div class="script-label">PATTERN FOR EACH CASE</div>
+                    <strong>1. Present the bias:</strong> "Here's what researchers discovered..."<br>
+                    <strong>2. Pause and ask:</strong> "What training data problem could cause this? Talk to your neighbor for 30 seconds."<br>
+                    <strong>3. Harvest responses:</strong> Take 2-3 guesses from students.<br>
+                    <strong>4. Confirm and explain:</strong> "Exactly. The training data [specific problem]..."<br>
+                    <strong>5. Connect:</strong> "So the AI didn't decide to be biased. It learned patterns from biased data."
                 </div>
-            </div>
 
-            <!-- Illinois Standards -->
-            <div id="illinois" class="standards-content">
-                <div class="standard-section">
-                    <h2>Illinois Learning Standards</h2>
-                    
-                    <div class="alignment-note">
-                        Lesson 4.1 addresses English Language Arts and Social Science standards through collaborative discussion, scenario analysis, and metacognitive reflection.
-                    </div>
-                    
-                    <h3>English Language Arts</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">SL.9-10.1</div>
-                        <div class="standard-description">Initiate and participate effectively in a range of collaborative discussions with diverse partners.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Multiple discussion formats (pair-share, small group, whole class) require effective collaboration and building on others' ideas.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">W.9-10.10</div>
-                        <div class="standard-description">Write routinely over extended and shorter time frames for a range of tasks, purposes, and audiences.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Field journal entries require reflective writing with specific prompts about personal bias awareness and AI predictions.</div>
-                    </div>
-                    
-                    <h3>Social Science - Inquiry Skills</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">SS.IS.5.9-12</div>
-                        <div class="standard-description">Identify evidence that draws information from multiple sources to support claims, noting any limitations of the evidence.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students learn that cognitive bias is a limitation affecting how evidence is perceived—foundational to evaluating evidence quality.</div>
-                    </div>
+                <h3>Core Insight Script</h3>
+                <div class="script-box">
+                    <div class="script-label">SAY</div>
+                    "Let's name what we're seeing. [Draw on board: Human Bias → Training Data → AI → Biased Output]<br><br>
+                    In Chapter 2, you learned 'garbage in, garbage out'—if you train AI on bad knock-knock jokes, you get bad knock-knock jokes. The same principle applies here, but it's not just about quality. It's about VALUES.<br><br>
+                    If training data contains stereotypes about gender and profession, AI learns those stereotypes. If training data underrepresents certain groups, AI struggles with those groups. If training data reflects the perspectives of one culture, AI centers that culture.<br><br>
+                    Here's the crucial insight: AI doesn't CREATE new biases. It AMPLIFIES existing human biases—and it does so at massive scale. A biased human makes maybe hundreds of decisions. A biased AI makes MILLIONS."
                 </div>
-            </div>
 
-            <!-- Ohio Standards -->
-            <div id="ohio" class="standards-content">
-                <div class="standard-section">
-                    <h2>Ohio Learning Standards</h2>
-                    
-                    <div class="alignment-note">
-                        Lesson 4.1 addresses English Language Arts and Social Studies standards through exploration of cognitive bias, discussion, and reflective writing.
-                    </div>
-                    
-                    <h3>English Language Arts</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">SL.9-10.1</div>
-                        <div class="standard-description">Initiate and participate effectively in collaborative discussions, building on others' ideas and expressing their own clearly.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students participate in structured discussions about bias scenarios, sharing observations and building collective understanding.</div>
-                    </div>
-                    
-                    <h3>Social Studies - Government</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">GOV.15</div>
-                        <div class="standard-description">Citizens have a responsibility to be informed and engaged in civic affairs.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Understanding bias is essential to informed citizenship; students develop awareness needed to recognize bias in civic discourse.</div>
-                    </div>
-                    
-                    <h3>Social Studies Skills and Methods</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">SSM.1</div>
-                        <div class="standard-description">Analyze how issues may be viewed differently by various individuals and groups.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students explore how cognitive biases cause different people to view the same situation differently—in-group bias, confirmation bias affecting perspective.</div>
-                    </div>
+                <h3>Addressing Cynicism Script</h3>
+                <div class="script-box">
+                    <div class="script-label">SAY</div>
+                    "So should we just stop using AI? No! Understanding where bias comes from is the first step to doing something about it.<br><br>
+                    Think of it like learning about germs. Once people understood that germs caused disease, they could wash hands, sterilize equipment, develop treatments. They didn't stop practicing medicine—they got BETTER at it.<br><br>
+                    Same with AI. Now that you understand bias comes from training data, you can ask better questions: What data was this trained on? Whose perspectives are represented? What might be missing? Tomorrow, you'll practice being bias detectives yourselves."
                 </div>
-            </div>
+            </section>
 
-            <!-- Georgia Standards -->
-            <div id="georgia" class="standards-content">
-                <div class="standard-section">
-                    <h2>Georgia Standards of Excellence</h2>
-                    
-                    <div class="alignment-note">
-                        Lesson 4.1 addresses English Language Arts and Social Studies standards through collaborative inquiry into cognitive bias.
-                    </div>
-                    
-                    <h3>English Language Arts</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">ELAGSE9-10SL1</div>
-                        <div class="standard-description">Initiate and participate effectively in a range of collaborative discussions with diverse partners, building on others' ideas and expressing their own clearly and persuasively.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students engage in pair-share, small group scenario analysis, and whole-class discussions, expressing ideas about bias and building on peer insights.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">ELAGSE9-10W10</div>
-                        <div class="standard-description">Write routinely over extended time frames and shorter time frames for a range of discipline-specific tasks, purposes, and audiences.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Field journal entries require focused reflective writing about bias recognition and predictions.</div>
-                    </div>
-                    
-                    <h3>Social Studies - Civics/Government</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">SSCG7</div>
-                        <div class="standard-description">Demonstrate knowledge of civil liberties and civil rights.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Understanding bias is foundational to recognizing how bias can affect civil liberties and rights—a theme developed throughout Chapter 4.</div>
-                    </div>
-                </div>
-            </div>
+            <!-- ASSESSMENT SECTION -->
+            <section id="assessment" class="section">
+                <h2>📊 Assessment</h2>
 
-            <!-- North Carolina Standards -->
-            <div id="northcarolina" class="standards-content">
-                <div class="standard-section">
-                    <h2>North Carolina Standard Course of Study</h2>
-                    
-                    <div class="alignment-note">
-                        Lesson 4.1 addresses English Language Arts and Social Studies standards through collaborative analysis of cognitive bias.
-                    </div>
-                    
-                    <h3>English Language Arts</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">SL.9-10.1</div>
-                        <div class="standard-description">Initiate and participate effectively in a range of collaborative discussions.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Multiple discussion formats require students to collaborate effectively, share observations, and build on peer ideas about bias.</div>
-                    </div>
-                    
-                    <h3>Social Studies - American History</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">AH.H.1.3</div>
-                        <div class="standard-description">Use Historical Analysis and Interpretation to analyze how events are connected and identify bias in sources.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Understanding cognitive bias is foundational to identifying bias in historical sources; students learn how bias operates in human cognition.</div>
-                    </div>
+                <h3>Formative Assessment (During Lesson)</h3>
+                <div class="objectives-list">
+                    <ul>
+                        <li><strong>Case study predictions:</strong> Can students hypothesize training data causes for observed biases?</li>
+                        <li><strong>Training Data Detective:</strong> Can students apply the pattern to new scenarios?</li>
+                        <li><strong>Discussion responses:</strong> Do students grasp amplification vs. creation of bias?</li>
+                    </ul>
                 </div>
-            </div>
 
-            <!-- Michigan Standards -->
-            <div id="michigan" class="standards-content">
-                <div class="standard-section">
-                    <h2>Michigan Academic Standards</h2>
-                    
-                    <div class="alignment-note">
-                        Lesson 4.1 addresses English Language Arts and Social Studies standards through discussion, scenario analysis, and reflective writing about bias.
-                    </div>
-                    
-                    <h3>English Language Arts</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">SL.9-10.1</div>
-                        <div class="standard-description">Initiate and participate effectively in collaborative discussions, building on others' ideas and expressing their own clearly.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students collaborate in pair-share, small groups, and whole-class discussions about bias types and their effects.</div>
-                    </div>
-                    
-                    <h3>Social Studies - Public Discourse and Decision Making</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">P1.4</div>
-                        <div class="standard-description">Express a position on a public policy issue and justify it with a reasoned argument.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Understanding bias prepares students to recognize how bias affects public discourse and to develop more reasoned, aware positions.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">P1.5</div>
-                        <div class="standard-description">Construct and present an argument supported with evidence.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students argue whether bias is harmful, helpful, or neutral in specific scenarios, supporting positions with reasoning.</div>
-                    </div>
-                </div>
-            </div>
+                <h3>Check for Understanding (End of Lesson)</h3>
 
-            <!-- Virginia Standards -->
-            <div id="virginia" class="standards-content">
-                <div class="standard-section">
-                    <h2>Virginia Standards of Learning</h2>
-                    
-                    <div class="alignment-note">
-                        Lesson 4.1 addresses English and Social Studies standards through exploration of cognitive bias, discussion, and reflective writing.
-                    </div>
-                    
-                    <h3>English</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">9.1</div>
-                        <div class="standard-description">The student will participate in, collaborate in, and report on small-group learning activities.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students work in small groups to analyze bias scenarios and report findings during share-out.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">10.1</div>
-                        <div class="standard-description">The student will participate in and contribute to conversations, group discussions, and oral presentations.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Multiple discussion formats require active participation and contribution of ideas about bias.</div>
-                    </div>
-                    
-                    <h3>Government</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">GOVT.1d</div>
-                        <div class="standard-description">Apply critical-thinking skills to analyze political communication, including how bias affects perception.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students develop foundational understanding of how cognitive bias affects perception—essential for analyzing political communication.</div>
-                    </div>
+                <div class="scenario-card">
+                    <h4>Question 1</h4>
+                    <p>A company trains an image recognition AI using photos primarily from fashion magazines. When deployed, the AI performs poorly at identifying people with darker skin tones. Why does this happen?</p>
+                    <p>A) The AI developed its own preferences about which faces to recognize<br>
+                    B) The training data contained mostly lighter-skinned faces, so the AI learned those patterns better<br>
+                    C) Image recognition technology doesn't work well with darker colors<br>
+                    D) The AI needs more processing power to recognize diverse faces</p>
+                    <div class="answer-key"><strong>Answer: B</strong> – The training data lacked diversity, so the AI learned patterns primarily from lighter-skinned faces</div>
                 </div>
-            </div>
 
-            <!-- Washington Standards -->
-            <div id="washington" class="standards-content">
-                <div class="standard-section">
-                    <h2>Washington State K-12 Learning Standards</h2>
-                    
-                    <div class="alignment-note">
-                        Lesson 4.1 addresses ELA and Social Studies standards through collaborative exploration of cognitive bias.
-                    </div>
-                    
-                    <h3>English Language Arts</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">SL.9-10.1</div>
-                        <div class="standard-description">Initiate and participate effectively in collaborative discussions with diverse partners.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students collaborate in pair-share, small groups, and whole-class discussions, building shared understanding of bias.</div>
-                    </div>
-                    
-                    <h3>Social Studies - Social Studies Skills</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">SSS1.9-12</div>
-                        <div class="standard-description">Uses critical reasoning skills to analyze and evaluate positions.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students evaluate whether biases are harmful, helpful, or neutral—developing critical reasoning about cognitive processes.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">SSS3.9-12</div>
-                        <div class="standard-description">Understands that there are multiple perspectives and interpretations of historical and current events.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students learn that bias causes different people to perceive the same events differently—foundational to understanding multiple perspectives.</div>
-                    </div>
+                <div class="scenario-card">
+                    <h4>Question 2</h4>
+                    <p>When someone types "The doctor picked up his..." into a search engine, the autocomplete suggests "stethoscope." When they type "The nurse picked up her..." it also suggests "clipboard." What does this pattern reveal?</p>
+                    <p>A) Doctors use stethoscopes more often than nurses do<br>
+                    B) The AI is making accurate predictions based on real-world data<br>
+                    C) The training data contained gendered assumptions about professions that the AI learned and reproduces<br>
+                    D) The AI was programmed by developers to associate gender with specific jobs</p>
+                    <div class="answer-key"><strong>Answer: C</strong> – The AI learned gendered assumptions about professions from patterns in its training data</div>
                 </div>
-            </div>
 
-            <!-- Mississippi Standards -->
-            <div id="mississippi" class="standards-content">
-                <div class="standard-section">
-                    <h2>Mississippi College and Career Readiness Standards</h2>
-                    
-                    <div class="alignment-note">
-                        Lesson 4.1 addresses English Language Arts and Social Studies standards through collaborative discussion and reflective writing about cognitive bias.
-                    </div>
-                    
-                    <h3>English Language Arts - Speaking and Listening</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">SL.9-10.1</div>
-                        <div class="standard-description">Initiate and participate effectively in a range of collaborative discussions with diverse partners, building on others' ideas and expressing their own clearly and persuasively.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students engage in multiple discussion formats—pair-share, small group analysis, whole-class discussion—building on peer observations about bias.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">SL.9-10.1.D</div>
-                        <div class="standard-description">Respond thoughtfully to diverse perspectives; summarize points of agreement and disagreement.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Ground rules emphasize valuing diverse perspectives; students discuss whether biases are harmful or helpful, identifying areas of agreement and disagreement.</div>
-                    </div>
-                    
-                    <h3>English Language Arts - Writing</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">W.9-10.10</div>
-                        <div class="standard-description">Write routinely over extended time frames and shorter time frames for a range of discipline-specific tasks, purposes, and audiences.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Field journal entries require focused reflective writing about recognizing personal bias, when bias is helpful, and predictions about AI bias.</div>
-                    </div>
-                    
-                    <h3>Social Studies</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">MS CCR SS Practice 4</div>
-                        <div class="standard-description">Communicating and critiquing conclusions—evaluate evidence, consider bias, and assess credibility.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students develop foundational understanding of how bias operates, preparing them to evaluate evidence and assess credibility in future work.</div>
-                    </div>
+                <div class="scenario-card">
+                    <h4>Question 3</h4>
+                    <p>Which statement best describes the relationship between human bias and AI bias?</p>
+                    <p>A) AI systems are objective and neutral, so they help eliminate human biases<br>
+                    B) AI creates entirely new biases that don't exist in human thinking<br>
+                    C) AI learns and amplifies biases that already exist in its training data<br>
+                    D) AI bias only occurs when developers intentionally program prejudice into systems</p>
+                    <div class="answer-key"><strong>Answer: C</strong> – AI doesn't create new biases; it learns and amplifies biases present in human-created training data</div>
                 </div>
-            </div>
 
-            <!-- Common Core Standards -->
-            <div id="ccss" class="standards-content">
-                <div class="standard-section">
-                    <h2>Common Core State Standards - English Language Arts</h2>
-                    
-                    <div class="alignment-note">
-                        Lesson 4.1 addresses speaking and listening, writing, and language standards through collaborative discussion about cognitive bias and reflective journaling.
-                    </div>
-                    
-                    <h3>Speaking and Listening</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">CCSS.ELA-LITERACY.SL.9-10.1</div>
-                        <div class="standard-description">Initiate and participate effectively in collaborative discussions, building on others' ideas and expressing their own clearly.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students participate in pair-share about the opening scenario, small group scenario analysis, and whole-class discussions about bias types.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">CCSS.ELA-LITERACY.SL.9-10.1.C</div>
-                        <div class="standard-description">Propel conversations by posing and responding to questions that probe reasoning and evidence.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Discussion questions probe why bias exists, when it's helpful vs. harmful, and what this means for AI—requiring students to reason through evidence.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">CCSS.ELA-LITERACY.SL.9-10.1.D</div>
-                        <div class="standard-description">Respond thoughtfully to diverse perspectives, summarize points of agreement and disagreement.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students discuss whether specific biases are harmful, helpful, or neutral—necessarily engaging with diverse perspectives and finding agreement/disagreement.</div>
-                    </div>
-                    
-                    <h3>Writing</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">CCSS.ELA-LITERACY.W.9-10.10</div>
-                        <div class="standard-description">Write routinely over extended and shorter time frames for a range of discipline-specific tasks, purposes, and audiences.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Field journal entries require focused reflective writing with specific prompts about personal bias recognition and predictions about AI.</div>
-                    </div>
-                    
-                    <h3>Language</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">CCSS.ELA-LITERACY.L.9-10.6</div>
-                        <div class="standard-description">Acquire and use accurately general academic and domain-specific words and phrases.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students learn and apply domain-specific vocabulary: confirmation bias, availability bias, implicit bias, in-group bias, cognitive shortcut, metacognition.</div>
-                    </div>
+                <div class="scenario-card">
+                    <h4>Short Answer 1</h4>
+                    <p>In Chapter 2, you learned about training AI with knock-knock jokes—the quality of jokes in the training data affected the quality of jokes the AI could produce. Explain how this same principle applies to bias. Use the phrase "garbage in, garbage out" in your response.</p>
+                    <div class="answer-key"><strong>Sample response:</strong> Just like low-quality knock-knock jokes in training data produced an AI that generated bad jokes, biased training data produces biased AI. "Garbage in, garbage out" means that if the training data contains stereotypes, prejudices, or underrepresentation of certain groups, the AI will learn and reproduce those same problems. The AI can only be as fair and accurate as the data it learned from.</div>
                 </div>
-            </div>
 
-            <!-- ISTE Standards -->
-            <div id="iste" class="standards-content">
-                <div class="standard-section">
-                    <h2>ISTE Standards for Students</h2>
-                    
-                    <div class="alignment-note">
-                        Lesson 4.1 addresses digital citizenship and computational thinking standards by exploring how human bias affects technology design and AI systems.
-                    </div>
-                    
-                    <h3>Digital Citizen</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">2.a</div>
-                        <div class="standard-description">Students cultivate and manage their digital identity and reputation and are aware of the permanence of their actions in the digital world.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Understanding how bias operates prepares students to recognize biased content online and make more aware decisions about digital engagement.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">2.b</div>
-                        <div class="standard-description">Students engage in positive, safe, legal and ethical behavior when using technology.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Bias awareness is foundational to ethical technology use; students learn to recognize how bias affects perception and decision-making.</div>
-                    </div>
-                    
-                    <h3>Knowledge Constructor</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">3.b</div>
-                        <div class="standard-description">Students evaluate the accuracy, perspective, credibility and relevance of information, media, data or other resources.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Understanding cognitive bias is essential to evaluating perspective and credibility; students learn how bias affects information processing.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">3.d</div>
-                        <div class="standard-description">Students build knowledge by actively exploring real-world issues and problems.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Cognitive bias is a real-world phenomenon affecting daily decisions; students explore through concrete scenarios from their own lives.</div>
-                    </div>
+                <div class="scenario-card">
+                    <h4>Short Answer 2</h4>
+                    <p>Some people argue that because AI is "just math," it must be objective and fair. Based on what you learned today, explain why this argument is flawed. Give one specific example to support your explanation.</p>
+                    <div class="answer-key"><strong>Sample response:</strong> While AI uses mathematical processes, the training data it learns from is created by humans—and humans have biases. For example, if a translation AI is trained on text where "doctor" is usually paired with "he" and "nurse" with "she," the AI will learn these gendered patterns and reproduce them, even though the math itself is neutral. The math processes the data, but the data reflects human assumptions.</div>
                 </div>
-            </div>
 
-            <!-- CSTA Standards -->
-            <div id="csta" class="standards-content">
-                <div class="standard-section">
-                    <h2>CSTA K-12 Computer Science Standards</h2>
-                    
-                    <div class="alignment-note">
-                        Lesson 4.1 addresses computing impacts and inclusive computing standards by exploring how human bias affects technology and AI systems.
-                    </div>
-                    
-                    <h3>Impacts of Computing</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">3A-IC-24</div>
-                        <div class="standard-description">Evaluate the ways computing impacts personal, ethical, social, economic, and cultural practices.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Understanding human bias is foundational to evaluating how bias becomes embedded in computing systems and affects social/cultural practices.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">3A-IC-25</div>
-                        <div class="standard-description">Test and refine computational artifacts to reduce bias and equity deficits.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Before students can reduce bias in computational artifacts, they must understand what bias is and how it operates—the focus of this foundational lesson.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">3B-IC-25</div>
-                        <div class="standard-description">Evaluate computational artifacts to maximize their beneficial effects and minimize harmful effects on society.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students develop the bias awareness needed to evaluate whether computational artifacts produce beneficial or harmful effects.</div>
-                    </div>
-                    
-                    <h3>Inclusive Computing</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">3A-IC-26</div>
-                        <div class="standard-description">Demonstrate ways a given algorithm applies to problems across disciplines.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students bridge to AI by recognizing that if human bias exists in training data, algorithmic systems will reproduce that bias across applications.</div>
-                    </div>
-                </div>
-            </div>
+                <h3>Field Journal Assessment</h3>
+                <table>
+                    <tr>
+                        <th>Points</th>
+                        <th>Criteria</th>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Clearly connects training data to bias; provides specific examples; applies "garbage in, garbage out" to values/culture; shows understanding of amplification</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Makes training data connection; provides some examples; understands basic concept but may lack depth</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Partial understanding; connection between training data and bias is unclear or incomplete</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Minimal engagement; does not demonstrate understanding of core concept</td>
+                    </tr>
+                </table>
+            </section>
 
-            <!-- C3 Framework -->
-            <div id="c3" class="standards-content">
-                <div class="standard-section">
-                    <h2>C3 Framework for Social Studies</h2>
-                    
-                    <div class="alignment-note">
-                        Lesson 4.1 strongly aligns with the C3 Framework's emphasis on inquiry, analysis, and civic engagement through exploration of cognitive bias and its implications.
-                    </div>
-                    
-                    <h3>Dimension 1: Developing Questions and Planning Inquiries</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">D1.1.9-12</div>
-                        <div class="standard-description">Explain how a question reflects an enduring issue in the field.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> The lesson addresses enduring questions: How do humans make decisions? What shapes our perceptions? How does bias affect individuals and society?</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">D1.5.9-12</div>
-                        <div class="standard-description">Determine the kinds of sources that will be helpful in answering compelling and supporting questions.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Understanding bias helps students recognize that all sources reflect the biases of their creators—essential for source evaluation.</div>
-                    </div>
-                    
-                    <h3>Dimension 2: Applying Disciplinary Concepts - Civics</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">D2.Civ.3.9-12</div>
-                        <div class="standard-description">Analyze the impact of constitutions, laws, treaties, and international agreements on the maintenance of national and international order.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Understanding bias prepares students to analyze how bias in laws and policies affects their impact—foundational for later analysis of AI in policy.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">D2.Civ.10.9-12</div>
-                        <div class="standard-description">Analyze the impact and the appropriate roles of personal interests and perspectives on the application of civic virtues, democratic principles, constitutional rights, and human rights.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students examine how personal perspectives (biases) affect decision-making, essential for understanding how bias impacts civic participation.</div>
-                    </div>
-                    
-                    <h3>Dimension 2: Applying Disciplinary Concepts - Psychology/Sociology</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">D2.Psy.1.9-12</div>
-                        <div class="standard-description">Define and explain the role of key concepts in psychology (cognition, memory, decision-making).</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students learn key psychological concepts: cognitive shortcuts, heuristics, confirmation bias, availability heuristic, implicit bias, in-group favoritism.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">D2.Soc.5.9-12</div>
-                        <div class="standard-description">Give examples of how individuals and groups may be influenced by perceptions, beliefs, and biases.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students analyze five scenarios showing how bias influences individual and group behavior (playlists, new students, cafeteria seating, news, group projects).</div>
-                    </div>
-                    
-                    <h3>Dimension 3: Evaluating Sources and Using Evidence</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">D3.1.9-12</div>
-                        <div class="standard-description">Gather relevant information from multiple sources representing a wide range of views while using the origin, authority, structure, context, and corroborative value of the sources to guide the selection.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Understanding bias is essential to evaluating sources; students learn how cognitive biases affect what information sources include or exclude.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">D3.2.9-12</div>
-                        <div class="standard-description">Evaluate the credibility of a source by examining how experts value the source.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students learn that even experts have biases; bias awareness is foundational to nuanced credibility evaluation.</div>
-                    </div>
-                    
-                    <h3>Dimension 4: Communicating Conclusions and Taking Informed Action</h3>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">D4.1.9-12</div>
-                        <div class="standard-description">Construct arguments using precise and knowledgeable claims, with evidence from multiple sources.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Students construct arguments about whether specific biases are harmful, helpful, or neutral, supporting claims with evidence from scenarios.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">D4.6.9-12</div>
-                        <div class="standard-description">Use disciplinary and interdisciplinary lenses to understand the characteristics and causes of local, regional, and global problems.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> Cognitive bias is examined through psychological, sociological, and civic lenses; students connect individual bias to societal implications for AI.</div>
-                    </div>
-                    
-                    <div class="standard-item">
-                        <div class="standard-code">D4.7.9-12</div>
-                        <div class="standard-description">Assess options for individual and collective action to address local, regional, and global problems.</div>
-                        <div class="lesson-mapping"><strong>Lesson 4.1 Alignment:</strong> The lesson's central message—that awareness enables better choices—directly addresses individual action to address bias as a cognitive and social problem.</div>
-                    </div>
+            <!-- DIFFERENTIATION SECTION -->
+            <section id="differentiation" class="section">
+                <h2>♿ Differentiation & Support</h2>
+
+                <h3>For Students Who Need More Support</h3>
+                <div class="objectives-list">
+                    <ul>
+                        <li>Provide a graphic organizer showing the flow: Human Bias → Training Data → AI → Output</li>
+                        <li>Use simpler case studies with very clear cause-effect relationships</li>
+                        <li>Offer sentence starters: "The AI learned this bias because the training data..."</li>
+                        <li>Pair with supportive peers during Training Data Detective activity</li>
+                    </ul>
                 </div>
-            </div>
+
+                <h3>For Advanced Learners</h3>
+                <div class="objectives-list">
+                    <ul>
+                        <li>Ask them to research additional AI bias cases (facial recognition in law enforcement, resume screening)</li>
+                        <li>Challenge: "How might you fix the training data to reduce bias? What challenges would you face?"</li>
+                        <li>Explore: "Why might fixing training data be harder than it sounds?"</li>
+                        <li>Connect to Lesson 3.7: How does RLHF worker bias connect to today's lesson?</li>
+                    </ul>
+                </div>
+
+                <h3>For English Language Learners</h3>
+                <div class="objectives-list">
+                    <ul>
+                        <li>Pre-teach: amplify, perpetuate, training data, representation</li>
+                        <li>Provide case studies in written form with key terms highlighted</li>
+                        <li>Use visual diagrams heavily (training data → bias flow)</li>
+                        <li>Allow discussion in home language during pair work</li>
+                    </ul>
+                </div>
+
+                <h3>For Students from Underrepresented Groups</h3>
+                <div class="warning-box">
+                    <p>Some students may have personally experienced the effects of AI bias (or human bias that feeds into AI). This lesson validates those experiences.</p>
+                    <ul>
+                        <li>Acknowledge: "Some of you may have experienced something like this firsthand"</li>
+                        <li>Validate: These aren't just abstract examples—they affect real people</li>
+                        <li>Empower: Understanding the mechanism is the first step toward change</li>
+                        <li>Don't put students on the spot to share personal experiences</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- CHALLENGES SECTION -->
+            <section id="challenges" class="section">
+                <h2>🚧 Anticipating Challenges</h2>
+
+                <div class="scenario-card">
+                    <h4>Challenge: "I'm not biased, so data I create wouldn't be biased!"</h4>
+                    <p><strong>Response:</strong> "Yesterday we learned that everyone has biases—they're cognitive shortcuts, not character flaws. The question isn't whether we have biases, but whether we're aware of them. Even well-intentioned people create data that reflects their perspective. That's not a criticism—it's just how human cognition works."</p>
+                </div>
+
+                <div class="scenario-card">
+                    <h4>Challenge: "So AI is just useless and unfair?"</h4>
+                    <p><strong>Response:</strong> "Understanding where bias comes from doesn't mean we give up—it means we get smarter. Doctors didn't stop treating patients when they learned about germs; they washed their hands and developed better practices. Same with AI. Now that you know bias comes from training data, you can ask better questions and make more informed decisions about when to trust AI."</p>
+                </div>
+
+                <div class="scenario-card">
+                    <h4>Challenge: "But the AI is just reflecting reality—doctors ARE mostly men!"</h4>
+                    <p><strong>Response:</strong> "That's an important point to think through. There's a difference between describing current patterns and reinforcing them. If AI always suggests male doctors, does it just reflect reality or does it also shape what people expect? And here's another question: should AI predict what IS or what SHOULD be? We'll explore this more as we continue."</p>
+                </div>
+
+                <div class="scenario-card">
+                    <h4>Challenge: Students fixate on one case study, missing the broader pattern</h4>
+                    <p><strong>Response:</strong> After discussing multiple cases, explicitly name the pattern: "Notice what all three examples have in common—the AI didn't decide to be biased. In every case, it learned patterns from data that was created by humans with biases. This is the mechanism, and it applies everywhere AI learns from human-created examples."</p>
+                </div>
+
+                <div class="scenario-card">
+                    <h4>Challenge: Students want to discuss "fixing" AI bias in depth</h4>
+                    <p><strong>Response:</strong> "That's a great question, and we'll explore it more in upcoming lessons. For now, know that understanding where bias comes from is the essential first step. You can't fix something if you don't know what's causing it. Today is about diagnosis; solutions come later."</p>
+                </div>
+            </section>
+
+            <!-- REFLECTION SECTION -->
+            <section id="reflection" class="section">
+                <h2>💭 Teacher Reflection</h2>
+
+                <p>After teaching this lesson, consider:</p>
+
+                <div class="objectives-list">
+                    <ul>
+                        <li><strong>Case studies:</strong> Which examples resonated most with students? Which fell flat?</li>
+                        <li><strong>Pattern recognition:</strong> Could students apply the training data → bias pattern to new scenarios?</li>
+                        <li><strong>Emotional responses:</strong> Did any students show defensiveness? Cynicism? How did you address it?</li>
+                        <li><strong>Chapter 2 connection:</strong> Did referencing knock-knock jokes help students transfer the concept?</li>
+                        <li><strong>Empowerment:</strong> Did students leave feeling informed rather than hopeless?</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <h4>Looking Ahead</h4>
+                    <p>Tomorrow (Lesson 4.3) students become bias detectives, hunting for hidden assumptions in Alia's responses. Today's conceptual understanding should prepare them to hypothesize about what training data patterns might cause the biases they discover. Watch for students who may need extra scaffolding to connect today's theory to tomorrow's investigation.</p>
+                </div>
+
+                <div class="success-box">
+                    <h4>Celebrate These Wins</h4>
+                    <ul>
+                        <li>Students successfully predicting training data causes for biases</li>
+                        <li>Students making unsolicited connections to Chapter 2</li>
+                        <li>Students asking thoughtful "what about..." questions</li>
+                        <li>Students expressing curiosity about finding bias in Alia</li>
+                        <li>Balanced discussion without defensiveness or cynicism taking over</li>
+                    </ul>
+                </div>
+            </section>
 
         </div><!-- End content -->
     </div><!-- End container -->
-    
-    <script>
-        function showStandards(value) {
-            // Hide all standards content
-            const allContent = document.querySelectorAll('.standards-content');
-            allContent.forEach(content => {
-                content.classList.remove('active');
-            });
-            
-            // Show selected standards
-            if (value) {
-                const selectedContent = document.getElementById(value);
-                if (selectedContent) {
-                    selectedContent.classList.add('active');
-                }
-            }
-        }
-    </script>
 </body>
 </html>
